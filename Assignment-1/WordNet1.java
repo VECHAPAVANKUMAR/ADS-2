@@ -84,6 +84,9 @@ public class WordNet1 {
                     arr = allLines.get(i).split(",",2);
                     hypernymsHashMapObj.put(Integer.parseInt(arr[0]), Arrays.asList(arr[1]));
                     hypMapObj.add(Integer.parseInt(arr[0]));
+                    for (String key : arr[1].split(",")) {
+                        hypernymsHashMapObj.put(Integer.parseInt(key), null);
+                    }
                 } else {
                     arr = allLines.get(i).split(" ");
                     hypernymsHashMapObj.put(Integer.parseInt(arr[0]), null);

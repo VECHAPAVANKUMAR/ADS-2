@@ -84,6 +84,9 @@ public class WordNet1 {
                     arr = allLines.get(i).split(",",2);
                     hypernymsHashMapObj.put(Integer.parseInt(arr[0]), Arrays.asList(arr[1]));
                     hypMapObj.add(Integer.parseInt(arr[0]));
+                    for (String key : arr[1].split(",")) {
+                        hypernymsHashMapObj.put(Integer.parseInt(key), null);
+                    }
                 } else {
                     arr = allLines.get(i).split(" ");
                     hypernymsHashMapObj.put(Integer.parseInt(arr[0]), null);
@@ -105,13 +108,13 @@ public class WordNet1 {
         }
     }
 
-    System.out.println("SIZE " + wordNet1Obj.hashMapObj.size());
+    System.out.println("Synseyt List SIZE " + wordNet1Obj.hashMapObj.size());
     
     for (int i = 0; i < wordNet1Obj.hashMapObj.size(); i++) {
         System.out.println(wordNet1Obj.hashMapObj.get(wordNet1Obj.synsetObjList.get(i).id));
     }
 
-    System.out.println("SIZE " + wordNet1Obj.hypMapObj.size());
+    System.out.println("Hypernyms List SIZE " + wordNet1Obj.hypMapObj.size());
     
     for (int i = 0; i < wordNet1Obj.hypMapObj.size(); i++) {
         System.out.println(wordNet1Obj.hypMapObj.get(i));
