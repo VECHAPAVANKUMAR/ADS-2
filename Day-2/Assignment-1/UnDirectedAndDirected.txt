@@ -1,0 +1,9 @@
+A undirected graph has no directions (bi-directional) where as a directional graph has directions
+pointing to it
+
+If there exists a path between two nodes with no directions then that is called as undirected graph
+If there exists a path between two nodes with direction pointing to one of the vertex then it is 
+called as a directed graph
+
+The degree of a node in case of undirected graph is in terms of multiples of 2 if there is no self loop
+The degree of a node in case of directed graph is in multiples of 1 even if there is no self loop
