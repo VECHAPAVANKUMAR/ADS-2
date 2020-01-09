@@ -1,9 +1,11 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,13 +14,14 @@ public class WordNet2 {
     List<Integer> hypMapObj;
     private HashMap<Integer, List<String>> hypernymsHashMapObj;
     List<String> listObj;
+    
     public WordNet2() {
         synsetHashMapObj = new HashMap<>();
         hypernymsHashMapObj = new HashMap<>();
         hypMapObj = new ArrayList<>();
         listObj = new ArrayList<>();
     }
-    private void parseSynsets(String fileName) throws IOException {
+    private void parseSynsets(String fileName) throws IOException, FileNotFoundException {
         Path path = Paths.get(fileName);
         List<String> allLines = Files.readAllLines(path);
         for (int i = 0; i < allLines.size(); i++) {
@@ -35,7 +38,7 @@ public class WordNet2 {
         }
     }
 
-    private void parseHypernyms(String fileName) throws IOException {
+    private void parseHypernyms(String fileName) throws IOException, FileNotFoundException {
         Path path = Paths.get(fileName);
         List<String> allLines = Files.readAllLines(path);
         String[] arr;
@@ -67,40 +70,74 @@ public class WordNet2 {
         }
     }
 
+    public boolean isNoun(String word) {
+        String key = word.trim().toLowerCase();
+        return synsetHashMapObj.containsKey(key);
+    }
+
+    public int distance(String nounA, String nounB) {
+        if (nounA == null || nounB == null) {
+            throw new IllegalArgumentException();
+        }
+        if (nounA.equals(nounB)) {
+            return 0;
+        }
+
+        int  minDiff = Integer.MAX_VALUE;
+        List<Integer> listObjA = synsetHashMapObj.get(nounA);
+        List<Integer> listObjB = synsetHashMapObj.get(nounB);
+
+        if (listObjA != null && listObjB != null) {
+            Collections.sort(listObjA);
+            Collections.sort(listObjB);
+        int l1 = 0, l2 = 0;
+        while (l1 < listObjA.size() && l2 < listObjB.size()) {
+            minDiff = Math.min(minDiff, Math.abs(listObjA.get(l1) - listObjB.get(l2)));
+            if (listObjA.get(l1) < listObjB.get(l2)) {
+                l1++;
+            } else {
+                l2++;
+            }
+        }
+    }
+    return minDiff;
+     }
+
     public static void main(String[] args) throws IOException {
         WordNet2 wordNet2Obj  = new WordNet2();
         File folder = new File("G:\\Github\\ADS-2\\WORDNET");
         File[] listOfFiles = folder.listFiles();
         
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile() && listOfFiles[i].getName().startsWith("synsets")) {
-                wordNet2Obj.parseSynsets(listOfFiles[i].getName());
-            } else if (listOfFiles[i].isFile() && listOfFiles[i].getName().startsWith("hypernyms")) {
-                wordNet2Obj.parseHypernyms(listOfFiles[i].getName());
-            }
-        }
-        System.out.println(wordNet2Obj.synsetHashMapObj.size());  
-        System.out.println(wordNet2Obj.synsetHashMapObj.get("bioscope"));  
-
-        int hySize = wordNet2Obj.getHypernymsHashMapObj().size();
+        // for (int i = 0; i < listOfFiles.length; i++) {
+        //     if (listOfFiles[i].isFile() && listOfFiles[i].getName().startsWith("synsets")) {
+        //         wordNet2Obj.parseSynsets(listOfFiles[i].getName());
+        //     } else if (listOfFiles[i].isFile() && listOfFiles[i].getName().startsWith("hypernyms")) {
+        //         wordNet2Obj.parseHypernyms(listOfFiles[i].getName());
+        //     }
+        // }
+        // System.out.println(wordNet2Obj.synsetHashMapObj.size());  
+        // System.out.println(wordNet2Obj.synsetHashMapObj.get("bioscope"));  
+        // System.out.println("SHD " + wordNet2Obj.distance("Mustelidae", "Mutillidae"));
+        // System.out.println("isNoun " + wordNet2Obj.isNoun("bioscope1"));
+        wordNet2Obj.parseSynsets("synsets.txt");
+        System.out.println(wordNet2Obj.getSynsetHashMapObj());
+        int hySize = wordNet2Obj.getSynsetHashMapObj().size();
         DiaGraph diaGraphObj = new DiaGraph(hySize); 
         
-        for (int i = 0; i < hySize; i++) {
-            List<String> listObj = wordNet2Obj.getHypernymsHashMapObj().get(wordNet2Obj.getHypMapObj().get(i));
-            // System.out.println(listObj);
-            if (listObj != null) {
-            for (int j = 0; j < listObj.size(); j++) {
-                diaGraphObj.addEdge(wordNet2Obj.getHypMapObj().get(i), Integer.parseInt(listObj.get(j)));
-            }
-        }
-    }
-        for (int v = 0; v < diaGraphObj.V(); v++) {
-            System.out.print(v);
-            for (int w : diaGraphObj.adj(v)) {
-                System.out.print(" ------> " + w);
-            }           
-            System.out.println();
-        }
+    //     for (int i = 0; i < hySize; i++) {
+    //         List<String> listObj = wordNet2Obj.getHypernymsHashMapObj().get(wordNet2Obj.getHypMapObj().get(i));
+    //         // System.out.println(listObj);
+    //         if (listObj != null) {
+    //         for (int j = 0; j < listObj.size(); j++) {
+    //             diaGraphObj.addEdge(wordNet2Obj.getHypMapObj().get(i), Integer.parseInt(listObj.get(j)));
+    //         }
+    //     }
+    // }
+    //     for (int v = 0; v < diaGraphObj.V(); v++) {
+    //         for (int w : diaGraphObj.adj(v)) {
+    //             System.out.println(v + " ------> " + w);
+    //         }           
+    //     }
     }
 
     public HashMap<String, List<Integer>> getSynsetHashMapObj() {

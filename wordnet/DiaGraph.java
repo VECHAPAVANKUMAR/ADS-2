@@ -7,6 +7,9 @@ private final int V;
 private final List<List<Integer>> adj;
 
 public DiaGraph(int V) {
+    if (V < 0) {
+        throw new IllegalArgumentException();
+    }
     this.V = V;
     adj = new ArrayList<>(V);
     for (int v = 0; v < V; v++)

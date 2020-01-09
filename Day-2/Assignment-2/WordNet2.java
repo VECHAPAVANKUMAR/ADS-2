@@ -1,9 +1,11 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class WordNet2 {
         hypMapObj = new ArrayList<>();
         listObj = new ArrayList<>();
     }
-    private void parseSynsets(String fileName) throws IOException {
+    private void parseSynsets(String fileName) throws IOException, FileNotFoundException {
         Path path = Paths.get(fileName);
         List<String> allLines = Files.readAllLines(path);
         for (int i = 0; i < allLines.size(); i++) {
@@ -35,7 +37,7 @@ public class WordNet2 {
         }
     }
 
-    private void parseHypernyms(String fileName) throws IOException {
+    private void parseHypernyms(String fileName) throws IOException, FileNotFoundException {
         Path path = Paths.get(fileName);
         List<String> allLines = Files.readAllLines(path);
         String[] arr;
@@ -67,7 +69,34 @@ public class WordNet2 {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public boolean isNoun(String word) {
+        String key = word.trim().toLowerCase();
+        return synsetHashMapObj.containsKey(key);
+    }
+
+    public int distance(String nounA, String nounB) {
+        if (nounA == null || nounB == null) {
+            throw new IllegalArgumentException();
+        }
+        if (nounA.equals(nounB)) {
+            return 0;
+        }
+        List<Integer> listObj1 = synsetHashMapObj.get(nounA);
+        List<Integer> listObj2 = synsetHashMapObj.get(nounB);
+        Collections.sort(listObj1);
+        Collections.sort(listObj2);
+        int l1 = 0, l2 = 0, minDiff = Integer.MAX_VALUE;
+        while (l1 < listObj1.size() && l2 < listObj2.size()) {
+            minDiff = Math.min(minDiff, Math.abs(listObj1.get(l1) - listObj2.get(l2)));
+            if (listObj1.get(l1) < listObj2.get(l2)) {
+                l1++;
+            } else {
+                l2++;
+            }
+        }
+    return minDiff;
+     }
+    public static void main(String[] args) throws IOException, FileNotFoundException {
         WordNet2 wordNet2Obj  = new WordNet2();
         File folder = new File("G:\\Github\\ADS-2\\WORDNET");
         File[] listOfFiles = folder.listFiles();
@@ -81,8 +110,8 @@ public class WordNet2 {
         }
         System.out.println(wordNet2Obj.synsetHashMapObj.size());  
         System.out.println(wordNet2Obj.synsetHashMapObj.get("bioscope"));  
-
-        int hySize = wordNet2Obj.getHypernymsHashMapObj().size();
+        // System.out.println("SHD " + wordNet2Obj.distance("Mustelidae", "Mutillidae"));
+        int hySize = wordNet2Obj.getSynsetHashMapObj().size();
         DiaGraph diaGraphObj = new DiaGraph(hySize); 
         
         for (int i = 0; i < hySize; i++) {

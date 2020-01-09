@@ -7,6 +7,7 @@ private final int V;
 private final List<List<Integer>> adj;
 
 public DiaGraph(int V) {
+    // Creates a Adjacency List
     this.V = V;
     adj = new ArrayList<>(V);
     for (int v = 0; v < V; v++)
