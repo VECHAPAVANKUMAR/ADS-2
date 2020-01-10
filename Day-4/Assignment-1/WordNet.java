@@ -27,6 +27,10 @@ public class WordNet {
         parseHypernyms(hypernyms);
     }
 
+    public Iterable<String> nouns() {
+     return synsetHashMapObj.keySet();   
+    }
+    
     private void parseSynsets(final String fileName) throws IOException, FileNotFoundException {
         final Path path = Paths.get(fileName);
         final List<String> allLines = Files.readAllLines(path);
