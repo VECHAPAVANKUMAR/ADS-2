@@ -1,7 +1,7 @@
-import programs.BreadthFirstDirectedPaths;
-import programs.Digraph;
-import programs.In;
-import programs.Bag;
+import edu.princeton.cs.algs4.BreadthFirstDirectedPaths;
+import edu.princeton.cs.algs4.Digraph;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Bag;
 
 public class SAP {
 

@@ -1,6 +1,6 @@
 import java.io.IOException;
-import programs.In;
-import programs.StdOut;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdOut;
 
 public class Outcast {
 

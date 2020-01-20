@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import programs.Digraph;
+import edu.princeton.cs.algs4.Digraph;
 
 public class WordNet {
     private Digraph g;
