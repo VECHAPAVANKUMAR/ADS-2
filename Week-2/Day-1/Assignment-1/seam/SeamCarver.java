@@ -72,7 +72,7 @@ public class SeamCarver {
 
     public static void main(final String[] args) {
 
-        String path = "G:\\Github\\ADS-2\\seam\\";
+        String path = "G:\\Github\\ADS-2\\Week-2\\Day-1\\Assignment-1\\seam\\";
         final File folder = new File(path);
         final File[] listOfFiles = folder.listFiles();
         
