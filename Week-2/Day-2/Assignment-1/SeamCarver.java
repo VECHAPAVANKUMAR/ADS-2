@@ -1,13 +1,9 @@
-import java.io.File;
-import java.util.Arrays;
-import java.util.Scanner;
-
 import edu.princeton.cs.algs4.Picture;
 /**
  * Class SeamCarver.
  * @author V. Pavan kumar
  */
-public final class SeamCarver4 {
+public final class SeamCarver {
     /**
      * Picture variable;
      */
@@ -16,11 +12,10 @@ public final class SeamCarver4 {
      * Energy Matrix.
      */
     private double[][] energyMatrix;
-
     /**
      * Argumented - Constructor For Initializing Instance Variables.
      */
-    public SeamCarver4(final Picture picture) {
+    public SeamCarver(final Picture picture) {
         
         if (picture == null) {
             throw new IllegalArgumentException();
@@ -232,18 +227,6 @@ public final class SeamCarver4 {
     }
 
     /**
-     * @return horizontal seam indices positions which are to be removed
-     */
-    public int[] findHorizontalSeam() {
-        
-        if (height() == 1) {
-            return new int[width()];
-        }
-
-        return getSeam(transpose(energyMatrix));
-    }
-
-    /**
      * @param m matrix
      * @return seam indices
      */
@@ -293,197 +276,118 @@ public final class SeamCarver4 {
     }
 
     /**
-     * @param seam seam indices that are to be removed
-     */
-    public void removeHorizontalSeam(final int[] seam) {
-        
-        if (seam == null || height() == 1 || seam.length != width()) {
-            throw new IllegalArgumentException();
-        }
-
-        for (int i = 0; i < seam.length; i++) {
-            if (seam[i] < 0 || seam[i] >= height()) {
-                throw new IllegalArgumentException();
-            }
-        }
-
-        for (int i = 0; i < seam.length - 1; i++) {
-            if (seam[i] < 0 || Math.abs(seam[i] - seam[i + 1]) > 1) {
-                throw new IllegalArgumentException();
-            }
-        }
-
-        Picture resizedPicture;
-        resizedPicture = new Picture(pictureObj.width(), pictureObj.height() - 1);
-        
-        for (int i = 0; i < resizedPicture.width(); i++) {
-            for (int j = 0; j < resizedPicture.height();) {
-                if (j >= seam[i]) {
-                    resizedPicture.set(i, j, pictureObj.get(i, ++j));
-                } else {
-                    resizedPicture.set(i, j, pictureObj.get(i, j++));
-                }
-            }
-        }
-
-        pictureObj = resizedPicture;
-        resizedPicture = null;
-        System.out.println(pictureObj);
-        calcEnergyMatrix();
-    }
-
-    /**
-     * @param seam seam indices that are to be removed
-     */
-    public void removeVerticalSeam(final int[] seam) {
-
-        if (seam == null || width() == 1 || seam.length != height()){
-            throw new IllegalArgumentException();
-        }
-
-        for (int i = 0; i < seam.length; i++) {
-            if (seam[i] < 0 || seam[i] >= width()) {
-                throw new IllegalArgumentException();
-            }
-        }
-        for (int i = 0; i < seam.length - 1; i++) {
-            if (seam[i] < 0 || Math.abs(seam[i] - seam[i + 1]) > 1) {
-                throw new IllegalArgumentException();
-            }
-        }
-
-        Picture resizedPicture;
-        resizedPicture = new Picture(pictureObj.width() - 1, pictureObj.height());
-
-        for (int i = 0; i < resizedPicture.height(); i++) {
-            for (int j = 0; j < resizedPicture.width();) {
-                if (j >= seam[i]) {
-                    resizedPicture.set(j, i, pictureObj.get(++j, i));
-                } else {
-                    resizedPicture.set(j, i, pictureObj.get(j++, i));
-                }
-            }
-        }
-        pictureObj = resizedPicture;
-        resizedPicture = null;
-        calcEnergyMatrix();
-    }
-    
-    /**
      * @param args Command Line Arguments
      */
     public static void main(final String[] args) {
 
-        final String path = "G:\\Github\\ADS-2\\Week-2\\seam\\";
+        // final String path = "G:\\Github\\ADS-2\\Week-2\\seam\\";
         
-        final File folder = new File(path);
-        
-        final File[] ar = folder.listFiles();
+        // final File folder = new File(path);
+        // final File[] ar = folder.listFiles();
 
-        Picture pictureObj;
-        SeamCarver4 seamCarver2Obj;
+        // Picture pictureObj;
+        // SeamCarver2 seamCarver2Obj;
 
-        int count = 0;
-        int inCount = 0;
+        // int count = 0;
+        // int inCount = 0;
 
-        for (int i = 0; i < ar.length; i++) {
+        // for (int i = 0; i < ar.length; i++) {
 
-            if (ar[i].isFile() && ar[i].getName().endsWith("7x10.png")) {
+        //     if (ar[i].isFile() && ar[i].getName().endsWith("6x5.png")) {
                 
-                inCount++;
+        //         inCount++;
                 
-                pictureObj = new Picture(path + ar[i].getName());
-                seamCarver2Obj = new SeamCarver4(pictureObj);
+        //         pictureObj = new Picture(path + ar[i].getName());
+        //         seamCarver2Obj = new SeamCarver2(pictureObj);
 
-                int[] se = seamCarver2Obj.findVerticalSeam();
-                String seam = "Vertical";
+        //         int[] se = seamCarver2Obj.findVerticalSeam();
+        //         String seam = "Vertical";
 
-                File f = null;
-                Scanner scObj = null;
+        //         File f = null;
+        //         Scanner scObj = null;
 
-                try {
-                    f = new File(path + ar[i].getName().replace(".png", "") + ".printseams.txt");
-                    scObj = new Scanner(f);
-                } catch (final Exception e) {
-                    count++;
-                    continue;
-                }
+        //         try {
+        //             f = new File(path + ar[i].getName().replace(".png", "") + ".printseams.txt");
+        //             scObj = new Scanner(f);
+        //         } catch (final Exception e) {
+        //             count++;
+        //             continue;
+        //         }
 
-                boolean flag = false;
-                String str = "";
+        //         boolean flag = false;
+        //         String str = "";
 
-                while (scObj.hasNext() && !flag) {
-                    while ((str = scObj.nextLine()).startsWith(seam)) {
-                        flag = true;
-                        break;
-                    }
-                }
+        //         while (scObj.hasNext() && !flag) {
+        //             while ((str = scObj.nextLine()).startsWith(seam)) {
+        //                 flag = true;
+        //                 break;
+        //             }
+        //         }
 
-                String res = Arrays.toString(se);
-                res = res.replace(",", "").replace("[", "{ ").replace("]", " }");
-                final String act = str.replace(seam + " seam: ", "");
+        //         String res = Arrays.toString(se);
+        //         res = res.replace(",", "").replace("[", "{ ").replace("]", " }");
+        //         final String act = str.replace(seam + " seam: ", "");
 
-                boolean resflag1 = false;
+        //         boolean resflag1 = false;
 
-                if (res.equals(act)) {
-                    resflag1 = true;
-                } else {
-                    System.out.println();
-                    System.out.println("Input : " + ar[i].getName());
-                    System.out.println("Actual : " + seam + " seam " + act);
-                    System.out.println("Obtained : " + seam + " seam " + res);
-                }
+        //         if (res.equals(act)) {
+        //             resflag1 = true;
+        //         } else {
+        //             System.out.println();
+        //             System.out.println("Input : " + ar[i].getName());
+        //             System.out.println("Actual : " + seam + " seam " + act);
+        //             System.out.println("Obtained : " + seam + " seam " + res);
+        //         }
 
-                se = seamCarver2Obj.findHorizontalSeam();
-                seam = "Horizontal";
+        //         se = seamCarver2Obj.findHorizontalSeam();
+        //         seam = "Horizontal";
 
-                flag = false;
-                str = "";
+        //         flag = false;
+        //         str = "";
 
-                while (scObj.hasNext() && !flag) {
-                    while ((str = scObj.nextLine()).startsWith(seam)) {
-                        flag = true;
-                        break;
-                    }
-                }
+        //         while (scObj.hasNext() && !flag) {
+        //             while ((str = scObj.nextLine()).startsWith(seam)) {
+        //                 flag = true;
+        //                 break;
+        //             }
+        //         }
 
-                String res1 = Arrays.toString(se);
-                res1 = res1.replace(",", "").replace("[", "{ ").replace("]", " }");
-                final String act1 = str.replace(seam + " seam: ", "");
+        //         String res1 = Arrays.toString(se);
+        //         res1 = res1.replace(",", "").replace("[", "{ ").replace("]", " }");
+        //         final String act1 = str.replace(seam + " seam: ", "");
 
-                boolean resflag2 = false;
+        //         boolean resflag2 = false;
 
-                if (res1.equals(act1)) {
-                    resflag2 = true;
-                } else {
-                    System.out.println();
-                    System.out.println("Input : " + ar[i].getName());
-                    System.out.println("Actual : " + seam + " seam " + act1);
-                    System.out.println("Obtained : " + seam + " seam " + res1);
-                }    
+        //         if (res1.equals(act1)) {
+        //             resflag2 = true;
+        //         } else {
+        //             System.out.println();
+        //             System.out.println("Input : " + ar[i].getName());
+        //             System.out.println("Actual : " + seam + " seam " + act1);
+        //             System.out.println("Obtained : " + seam + " seam " + res1);
+        //         }    
                 
-                if(resflag1 && resflag2) {
-                    count++;
-                }
+        //         if(resflag1 && resflag2) {
+        //             count++;
+        //         }
 
-                scObj.close();
+        //         scObj.close();
 
-                int[] result;
-                // result = seamCarver2Obj.findVerticalSeam();
-                // System.out.println(Arrays.toString(result));
-                // seamCarver2Obj.removeVerticalSeam(result);
+        //         int[] result = seamCarver2Obj.findVerticalSeam();
+        //         System.out.println(Arrays.toString(result));
+        //         seamCarver2Obj.removeVerticalSeam(result);
 
-                result = seamCarver2Obj.findHorizontalSeam();
-                System.out.println(Arrays.toString(result));
-                seamCarver2Obj.removeHorizontalSeam(result);
-            }
-        }
+        //         result = seamCarver2Obj.findHorizontalSeam();
+        //         System.out.println(Arrays.toString(result));
+        //         seamCarver2Obj.removeHorizontalSeam(result);
+        //     }
+        // }
 
-        if (count != inCount) {
-            System.out.println("Test cases passed : " + count + " out of " + inCount);
-        } else {
-            System.out.println("All Test Cases Passed");
-        }
+        // if (count != inCount) {
+        //     System.out.println("Test cases passed : " + count + " out of " + inCount);
+        // } else {
+        //     System.out.println("All Test Cases Passed");
+        // }
     }
 }
 
