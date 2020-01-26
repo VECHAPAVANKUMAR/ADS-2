@@ -408,8 +408,7 @@ public final class SeamCarver {
 
                 String str = "";
 
-                while (scannerObj.hasNext() && !(str = scannerObj.nextLine()).startsWith(seam))
-                    ;
+                while (scannerObj.hasNext() && !(str = scannerObj.nextLine()).startsWith(seam));
 
                 String res = Arrays.toString(seamIndices);
                 res = res.replace(",", "").replace("[", "{ ").replace("]", " }");
