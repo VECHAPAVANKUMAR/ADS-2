@@ -375,7 +375,7 @@ public final class SeamCarver {
         final String path = "G:\\Github\\ADS-2\\Week-2\\seam\\";
         
         final File folder = new File(path);
-        final File[] ar = folder.listFiles();
+        final File[] fileArray = folder.listFiles();
 
         Picture pictureObj;
         SeamCarver seamCarverObj;
@@ -383,24 +383,24 @@ public final class SeamCarver {
         int count = 0;
         int inCount = 0;
 
-        for (int i = 0; i < ar.length; i++) {
+        for (int i = 0; i < fileArray.length; i++) {
 
-            if (ar[i].isFile() && ar[i].getName().endsWith(".png")) {
-                
+            if (fileArray[i].isFile() && fileArray[i].getName().endsWith(".png")) {
+
                 inCount++;
-                
-                pictureObj = new Picture(path + ar[i].getName());
+
+                pictureObj = new Picture(path + fileArray[i].getName());
                 seamCarverObj = new SeamCarver(pictureObj);
 
                 int[] seamIndices = seamCarverObj.findVerticalSeam();
                 String seam = "Vertical";
 
-                File f = null;
+                File fileObj = null;
                 Scanner scannerObj = null;
 
                 try {
-                    f = new File(path + ar[i].getName().replace(".png", "") + ".printseams.txt");
-                    scannerObj = new Scanner(f);
+                    fileObj = new File(path + fileArray[i].getName().replace(".png", "") + ".printseams.txt");
+                    scannerObj = new Scanner(fileObj);
                 } catch (final Exception e) {
                     count++;
                     continue;
@@ -420,7 +420,7 @@ public final class SeamCarver {
                     resflag1 = true;
                 } else {
                     System.out.println();
-                    System.out.println("Input : " + ar[i].getName());
+                    System.out.println("Input : " + fileArray[i].getName());
                     System.out.println("Actual : " + seam + " seam " + act);
                     System.out.println("Obtained : " + seam + " seam " + res);
                 }
@@ -442,7 +442,7 @@ public final class SeamCarver {
                     resflag2 = true;
                 } else {
                     System.out.println();
-                    System.out.println("Input : " + ar[i].getName());
+                    System.out.println("Input : " + fileArray[i].getName());
                     System.out.println("Actual : " + seam + " seam " + act1);
                     System.out.println("Obtained : " + seam + " seam " + res1);
                 }

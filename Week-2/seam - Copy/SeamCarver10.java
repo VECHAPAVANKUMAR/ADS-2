@@ -377,7 +377,7 @@ public final class SeamCarver10 {
         final String path = "G:\\Github\\ADS-2\\Week-2\\seam\\";
         
         final File folder = new File(path);
-        final File[] ar = folder.listFiles();
+        final File[] fileArray = folder.listFiles();
 
         Picture pictureObj;
         SeamCarver10 seamCarver10Obj;
@@ -385,24 +385,24 @@ public final class SeamCarver10 {
         int count = 0;
         int inCount = 0;
 
-        for (int i = 0; i < ar.length; i++) {
+        for (int i = 0; i < fileArray.length; i++) {
 
-            if (ar[i].isFile() && ar[i].getName().endsWith(".png")) {
-                
+            if (fileArray[i].isFile() && fileArray[i].getName().endsWith(".png")) {
+
                 inCount++;
-                
-                pictureObj = new Picture(path + ar[i].getName());
+
+                pictureObj = new Picture(path + fileArray[i].getName());
                 seamCarver10Obj = new SeamCarver10(pictureObj);
 
                 int[] se = seamCarver10Obj.findVerticalSeam();
                 String seam = "Vertical";
 
-                File f = null;
-                Scanner scObj = null;
+                File fileObj = null;
+                Scanner scannerObj = null;
 
                 try {
-                    f = new File(path + ar[i].getName().replace(".png", "") + ".printseams.txt");
-                    scObj = new Scanner(f);
+                    fileObj = new File(path + fileArray[i].getName().replace(".png", "") + ".printseams.txt");
+                    scannerObj = new Scanner(fileObj);
                 } catch (final Exception e) {
                     count++;
                     continue;
@@ -410,11 +410,7 @@ public final class SeamCarver10 {
 
                 String str = "";
 
-                while (scObj.hasNext()) {
-                    if ((str = scObj.nextLine()).startsWith(seam)) {
-                        break;
-                    }
-                }
+                while (scannerObj.hasNext() && !(str = scannerObj.nextLine()).startsWith(seam));
 
                 String res = Arrays.toString(se);
                 res = res.replace(",", "").replace("[", "{ ").replace("]", " }");
@@ -426,7 +422,7 @@ public final class SeamCarver10 {
                     resflag1 = true;
                 } else {
                     System.out.println();
-                    System.out.println("Input : " + ar[i].getName());
+                    System.out.println("Input : " + fileArray[i].getName());
                     System.out.println("Actual : " + seam + " seam " + act);
                     System.out.println("Obtained : " + seam + " seam " + res);
                 }
@@ -436,11 +432,7 @@ public final class SeamCarver10 {
 
                 str = "";
 
-                while (scObj.hasNext()) {
-                    if ((str = scObj.nextLine()).startsWith(seam)) {
-                        break;
-                    }
-                }
+                while (scannerObj.hasNext() && !(str = scannerObj.nextLine()).startsWith(seam));
 
                 String res1 = Arrays.toString(se);
                 res1 = res1.replace(",", "").replace("[", "{ ").replace("]", " }");
@@ -452,23 +444,21 @@ public final class SeamCarver10 {
                     resflag2 = true;
                 } else {
                     System.out.println();
-                    System.out.println("Input : " + ar[i].getName());
+                    System.out.println("Input : " + fileArray[i].getName());
                     System.out.println("Actual : " + seam + " seam " + act1);
                     System.out.println("Obtained : " + seam + " seam " + res1);
-                }    
-                
-                if(resflag1 && resflag2) {
+                }
+
+                if (resflag1 && resflag2) {
                     count++;
                 }
 
-                scObj.close();
+                scannerObj.close();
 
                 int[] result = seamCarver10Obj.findVerticalSeam();
-                // System.out.println(Arrays.toString(result));
                 seamCarver10Obj.removeVerticalSeam(result);
 
                 result = seamCarver10Obj.findHorizontalSeam();
-                // System.out.println(Arrays.toString(result));
                 seamCarver10Obj.removeHorizontalSeam(result);
             }
         }

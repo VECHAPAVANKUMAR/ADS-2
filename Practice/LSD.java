@@ -18,9 +18,9 @@
                                                             // string is to be placed so that array will be sorted
                 }
                 for (int j = 0; j < N; j++) {
-                    System.out.println(frequencyCount[arr[j].charAt(i)]);
+                    // System.out.println(frequencyCount[arr[j].charAt(i)]);
                     aux[frequencyCount[arr[j].charAt(i)]++] = arr[j];     // This is post increment
-                    System.out.println(frequencyCount[arr[j].charAt(i)]); // post increment is required because the other
+                    // System.out.println(frequencyCount[arr[j].charAt(i)]); // post increment is required because the other
                                                                         // with the same end char must be placed after the first
                                                                         // string in arr to maintain stability
                 }
@@ -34,7 +34,7 @@
             String[] arr = {"abt","abt","abc"};
             LSD.sort(arr, arr[0].length());
             System.out.println(Arrays.toString(arr));
-            System.out.println('c' + 0);
+            // System.out.println('c' + 0);
         }
     }
 
